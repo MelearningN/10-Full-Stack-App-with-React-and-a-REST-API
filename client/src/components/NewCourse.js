@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
     NavLink
   } from "react-router-dom";
 
+  // new course component appears in home page
 const NewCourse=()=>
             <React.Fragment>
                   <NavLink className="course--module course--add--module" to={'/courses/create'}>

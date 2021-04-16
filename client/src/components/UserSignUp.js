@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default class UserSignUp extends Component {
+  //default states
   state = {
     firstName: '',
     lastName: '',
@@ -32,7 +33,7 @@ export default class UserSignUp extends Component {
             submit={this.submit}
             submitButtonText="Sign Up"
             errors={errors}
-            elements={() => (
+            data={() => (
               <React.Fragment>
                 <input 
                   id="firstName" 
@@ -109,8 +110,9 @@ export default class UserSignUp extends Component {
         password
     };
 
+    // user form validation
     if (firstName === '' || lastName === '' || emailAddress==='' || password==='' || confirmPassword==='' ) {
-      if (firstName == '') {
+      if (firstName === '') {
           this.setState(prevState => ({
               errors: [
                   ...prevState.errors,
@@ -118,7 +120,7 @@ export default class UserSignUp extends Component {
               ]
           }))
       }
-      if (lastName == '') {
+      if (lastName === '') {
           this.setState(prevState => ({
               errors: [
                   ...prevState.errors,
@@ -126,7 +128,7 @@ export default class UserSignUp extends Component {
               ]
           }))
       }
-      if (emailAddress == '') {
+      if (emailAddress === '') {
         this.setState(prevState => ({
             errors: [
                 ...prevState.errors,
@@ -134,7 +136,7 @@ export default class UserSignUp extends Component {
             ]
         }))
     }
-    if (password == '') {
+    if (password === '') {
       this.setState(prevState => ({
           errors: [
               ...prevState.errors,
@@ -152,7 +154,7 @@ export default class UserSignUp extends Component {
 }
 
   } else {
-
+    // when there is no error then create a user
     context.data.createUser(user)
       .then( errors => {
         if (errors.length) {
@@ -164,12 +166,10 @@ export default class UserSignUp extends Component {
             });
         }
       })
-      .catch((err) => {
-        console.log(err);
-        this.props.history.push('/error');
-      });
+      .catch(
+        this.props.history.push('/error')
+      );
     }
-  
   }
 
   cancel = () => {

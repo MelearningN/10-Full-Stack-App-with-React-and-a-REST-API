@@ -9,9 +9,8 @@ class Courses extends Component {
         courses: [],
         isLoading: true
     }
+    // fetching all the courses when component in mounted
     fetchCourses = () => {
-        // when loading the page, empty the state variables
-        // so the render will show default state while the images load
         this.setState({courses: [], isLoading: true});
         const data = new Data();
         data.getCourses().then(responseData => {
@@ -36,7 +35,6 @@ class Courses extends Component {
             <div>Loadings.!..</div> }
              <NewCourse />
              </div>
-            
              </main>
         )
     }

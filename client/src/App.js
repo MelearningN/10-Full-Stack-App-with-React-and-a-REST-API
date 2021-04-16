@@ -17,6 +17,7 @@ import PrivateRoute from './PrivateRoute'
 
 import withContext from './Context';
 
+// connecting to context
 const HeaderWithContext = withContext(Header);
 const CourseDetailWithContext = withContext(CourseDetails);
 const CreateCourseWithContext = withContext(CreateCourse);
@@ -25,8 +26,8 @@ const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
 
-
-export default() => (
+// Main container with routes
+const App=() => (
     <Router>
         <div>
             <HeaderWithContext/>
@@ -54,3 +55,5 @@ export default() => (
         </div>
     </Router>
 );
+
+export default App;

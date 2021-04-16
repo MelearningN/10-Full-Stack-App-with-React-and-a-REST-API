@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Form from './Form';
-import { Redirect } from 'react-router-dom';
 
 export default class UpdateCourse extends Component {
   
+  // default states
     state = {
       title: '',
       description: '',
@@ -14,23 +14,21 @@ export default class UpdateCourse extends Component {
       errors: []
     };
 
+    // fetching courses by specific id
   fetchCourseById = (courseId) => {
 
     const { context } = this.props;
 
     context.data.getCourseById(courseId)
     .then(responseData => {
-        
-        this.setState({ title: responseData[0].title, description: responseData[0].description, materialsNeeded: responseData[0].materialsNeeded, estimatedTime: responseData[0].estimatedTime, isLoading: false, id: responseData[0].id, courseUserId: responseData[0].User.id, courseWasFound: true });
-   
+    this.setState({ title: responseData[0].title, description: responseData[0].description, materialsNeeded: responseData[0].materialsNeeded, estimatedTime: responseData[0].estimatedTime, isLoading: false, id: responseData[0].id, courseUserId: responseData[0].User.id, courseWasFound: true });
     })
-    .catch(error => {
-      console.log('Error fetching and parsing data', error);
+    .catch((err) => {
+      console.log(err);
     });
   }
 
   componentDidMount() {
-      console.log('this.props.match.params.id', this.props.match.params.id)
     this.fetchCourseById(this.props.match.params.id);
   }
 
@@ -53,7 +51,7 @@ export default class UpdateCourse extends Component {
             errors={errors}
             submit={this.submit}
             submitButtonText="Update Course"
-            elements={() => (
+            data={() => (
               <React.Fragment>
                 <div>
                 <input 
@@ -127,17 +125,13 @@ export default class UpdateCourse extends Component {
       materialsNeeded,
     };
 
-    console.log('context.authenticatedUser, context.authenticatedUserPwd', context.authenticatedUser, context.authenticatedUserPwd)
-
     context.data.updateCourse(course, id, context.authenticatedUser, context.authenticatedUserPwd)
       .then(  this.props.history.push('/api/courses/' + id))
       .catch((err) => {
         console.log(err);
-        this.props.history.push('/not-found');
       });
-  
   }
-
+// cancel button redirects user
   cancel = () => {
     this.props.history.push('/api/courses/' + this.props.match.params.id);
   }

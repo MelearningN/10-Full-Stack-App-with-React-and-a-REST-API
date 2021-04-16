@@ -1,162 +1,145 @@
 import config from './config';
 
-//Contains methods for interacting with the api application
-//all methods are designated async since the React components using these are themselves asynch
-//each uses method api and awaits its return results before proceeding (fetch is async)
-
 export default class Data {
-  //main method: access the API URI using the specified method, body, and auth credentials (if required)
+  // api method to send server requests
   api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
     const url = config.apiBaseUrl + path;
   
     const options = {
       method,
       headers: {
-        //body content is always JSON
         'Content-Type': 'application/json; charset=utf-8',
       },
     };
 
     if (body !== null) {
       options.body = JSON.stringify(body);
-      console.log('sdfsdfsdsss',  options.body)
     }
 
-    if (requiresAuth) {    
-      //Basic Auth is a constructed string using btoa (returns Base64 string) - byte to ASCII
-      //https://en.wikipedia.org/wiki/Base64
+    if (requiresAuth) {
       const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
     }
     return fetch(url, options);
   }
 
-  //GET /users, pass in auth using credentials username and password
+  //GET Users, pass in auth using credentials username and password
   async getUser(username, password) {
-
     const response = await this.api(`/users`, 'GET', null, true, { username, password });
-
     if (response.status === 200) {
       return response.json().then(data => data);
     }
-    //GET /users error code is 401
+    // If user is unauthorized
     else if (response.status === 401) {
       return null;
     }
-    //reached if 500 or any other status code
+    //Unexpected Error
     else {
       throw new Error();
     }
   }
   
-  //POST /users, create the user in the passed JSON
+  //POST Users, create the user
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
       return [];
     }
-    //POST /users error code is a 400
+    // If user sends a bad request
     else if (response.status === 400) {
       return response.json().then(data => {
         return data.message;
       });
     }
-    //reached if 500 or any other status code
+    //Unexpected Error
     else {
       throw new Error();
     }
   }
 
-  //GET /courses, no parameters required
+  //GET Courses
   async getCourses() {
     const response = await this.api('/courses/', 'GET');
     if (response.status === 200) {
-       
       return response.json().then(data => data);
     }
-    //GET /courses error code is 404
+    // requested course doesn't exist
     else if (response.status === 404) {
       return null;
     }
-    //reached if 500 or any other status code
+    //Unexpected Error
     else {
       throw new Error();
     }
   }
 
-  //GET /courses/:id, from this ID
+  //GET specific course
   async getCourseById(id) {
-   
     const response = await this.api('/courses/' + id, 'GET');
-    
-    if (response.status === 200) {
-        
+    if (response.status === 200) {    
       return response.json().then(data => data);
     }
-    //GET /courses/:id error code is 404
+    //GET courses doesn't exist
     else if (response.status === 404) {
       return null;
     }
-    //reached if 500 or any other status code
+    //unexpected Error
     else {
       throw new Error();
     }
   }
 
-  //POST /courses, using the user and password credentials and course JSON
+  //POST Courses with proper userCredentials
   async createCourse(course, userCredentials) {
     const response = await this.api('/courses', 'POST', course, true, userCredentials);
     if (response.status === 201) {
       return [];
     }
-    //POST /courses error code is 400
+    // If user sends a bad request
     else if (response.status === 400) {
       return response.json().then(data => {
         return data.message;
       });
     }
-    //reached if 500 or any other status code
+     //unexpected Error
     else {
       throw new Error();
     }
   }
 
-  //PUT /courses/:id, from this ID using these credentials and ID
+  //PUT Course update with proper userCredentials
   async updateCourse(course, id, user, password) {
-      console.log('ff', user)
     const username = user[0].emailAddress;
     const response = await this.api('/courses/' + id, 'PUT', course, true, {username, password});
     if (response.status === 204) {
       return [];
     }
-    //PUT /courses/:id error code is 400
+   // If user sends a bad request
     else if (response.status === 400) {
       return response.json().then(data => {
         return data;
-        //in project 9, the error message for PUT /courses/:id didn't have a name value.
-        //pass the whole string out as the error validation message
       });
     }
-    //reached if 500 or any other status code
+   //unexpected Error
     else {
       throw new Error();
     }
   }
 
-  //DELETE /courses/:id, from this ID, for these credentials
+  //DELETE Course with specific userCredentials
   async deleteCourse(id, user, password) {
     const username = user[0].emailAddress;
     const response = await this.api('/courses/' + id, 'DELETE', null, true, {username, password});
     if (response.status === 204) {
       return [];
     }
-    //DELETE /courses/:id error code is 400
+      // If user sends a bad request
     else if (response.status === 400) {
       return response.json().then(data => {
         return data.message;
       });
     }
-    //reached if 500 or any other status code
+    //unexpected Error
     else {
       throw new Error();
     }

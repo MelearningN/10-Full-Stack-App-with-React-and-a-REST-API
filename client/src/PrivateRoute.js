@@ -2,9 +2,8 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Consumer } from './Context';
 
-//Render the Component if context.autheticatedUser is logged in, otherwise Redirect to the /signin route
-
-export default ({ component: Component, ...rest }) => {
+// Private route that is used to configure protected routes (i.e. routes that require authentication).
+const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Consumer>
       {context => (
@@ -24,3 +23,5 @@ export default ({ component: Component, ...rest }) => {
     </Consumer>
   );
 };
+
+export default PrivateRoute;

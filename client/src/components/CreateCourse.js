@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Form from './Form'
 
 export default class CreateCourse extends Component {
+   // default states
     state = {
         title: '',
         author: '',
@@ -33,7 +34,7 @@ export default class CreateCourse extends Component {
                         }
                         errors={errors}
                         submitButtonText="Create Course"
-                        elements={
+                        data={
                             () => (
                                 <React.Fragment>
                                     <div>
@@ -96,8 +97,7 @@ export default class CreateCourse extends Component {
             description,
             author,
             estimatedTime,
-            materialsNeeded,
-            errors
+            materialsNeeded
         } = this.state;
         this.setState({errors: []})
         const course = {
@@ -108,22 +108,23 @@ export default class CreateCourse extends Component {
             materialsNeeded,
             userId: context.authenticatedUser[0].id
         };
+        // user creditials object
         const userCredentials = {
             username: context.authenticatedUser[0].emailAddress,
             password: context.authenticatedUserPwd
         }
 
+        // form validation
         if (title === '' || description === '') {
-            if (title == '') {
+            if (title === '') {
                 this.setState(prevState => ({
                     errors: [
                         ...prevState.errors,
                         'Title'
                     ]
                 }))
-                console.log('errorsssss', errors)
             }
-            if (description == '') {
+            if (description === '') {
                 this.setState(prevState => ({
                     errors: [
                         ...prevState.errors,
@@ -138,7 +139,6 @@ export default class CreateCourse extends Component {
               this.props.history.push('/')
             )
             .catch((err) => {
-                console.log(err);
                 this.props.history.push('/error');
             });
         }

@@ -1,10 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-//withRouter gives the Header access to the 'this.props.location' attribute, allowing pathname
-//to be set to a variable and passed to the SignIn and SignUp Link clicks (UserSignIn and UserSignUp components)
-import { withRouter } from 'react-router';
-
 export default class Header extends React.PureComponent {
   render() {
     const { context } = this.props;

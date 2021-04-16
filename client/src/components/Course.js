@@ -3,6 +3,7 @@ import {
     NavLink
   } from "react-router-dom";
 
+  // render single course component
 const Course=({course})=>
 <React.Fragment>
      <NavLink className="course--module" to={`/api/courses/${course.id}`}>

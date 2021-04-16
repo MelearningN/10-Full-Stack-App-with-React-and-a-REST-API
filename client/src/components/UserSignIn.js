@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default class UserSignIn extends Component {
+  // default states
   state = {
     emailAddress: '',
     password: '',
@@ -26,7 +27,7 @@ export default class UserSignIn extends Component {
             errors={errors}
             submit={this.submit}
             submitButtonText="Sign In"
-            elements={() => (
+            data={() => (
               <React.Fragment>
                 <input 
                   id="emailAddress" 
@@ -67,8 +68,6 @@ export default class UserSignIn extends Component {
     const { context } = this.props;
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
-
-   
 
     context.actions.signIn(emailAddress, password)
       .then((user) => {
