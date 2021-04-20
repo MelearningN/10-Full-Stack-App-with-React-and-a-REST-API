@@ -116,7 +116,6 @@ export default class UpdateCourse extends Component {
         id
     } =this.state;
    
-
     // Create course
     const course = {
       title,
@@ -125,11 +124,34 @@ export default class UpdateCourse extends Component {
       materialsNeeded,
     };
 
+  // form validation
+  if (title === '' || description === '') {
+    if (title === '') {
+        this.setState(prevState => ({
+            errors: [
+                ...prevState.errors,
+                'Title'
+            ]
+        }))
+    }
+    if (description === '') {
+        this.setState(prevState => ({
+            errors: [
+                ...prevState.errors,
+                'Descrition'
+            ]
+        }))
+    }
+} else {
+    this.setState({errors: []})
     context.data.updateCourse(course, id, context.authenticatedUser, context.authenticatedUserPwd)
       .then(  this.props.history.push('/api/courses/' + id))
       .catch((err) => {
         console.log(err);
       });
+}
+    
+    
   }
 // cancel button redirects user
   cancel = () => {

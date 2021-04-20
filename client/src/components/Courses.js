@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-
+import {
+    NavLink
+  } from "react-router-dom";
 import NewCourse from './NewCourse';
-import Course from './Course'
+
 import Data from '../Data'
 
 class Courses extends Component {
@@ -31,7 +33,10 @@ class Courses extends Component {
             <div className="wrap main--grid">
             {!this.state.loading ? 
             this.state.courses.map(course => 
-             <Course course={course} key={course.id}/>) : 
+                <NavLink key={course.id} className="course--module" to={`/api/courses/${course.id}`}>
+                <h2 className="course--label">Course</h2>
+                <h3 className="course--title">{course.title}</h3>
+            </NavLink>) : 
             <div>Loadings.!..</div> }
              <NewCourse />
              </div>

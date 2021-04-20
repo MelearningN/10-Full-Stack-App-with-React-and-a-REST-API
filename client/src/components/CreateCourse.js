@@ -5,7 +5,6 @@ export default class CreateCourse extends Component {
    // default states
     state = {
         title: '',
-        author: '',
         description: '',
         estimatedTime: '',
         materialsNeeded: '',
@@ -15,7 +14,6 @@ export default class CreateCourse extends Component {
     render() {
         const {
             title,
-            author,
             description,
             estimatedTime,
             materialsNeeded,
@@ -38,18 +36,15 @@ export default class CreateCourse extends Component {
                             () => (
                                 <React.Fragment>
                                     <div>
+                                    <label for="title">Title</label>
                                         <input id="courseTitle" name="title" type="text"
                                             value={title}
                                             onChange={
                                                 this.change
                                             }
                                             placeholder="Course title"/>
-                                        <input id="courseAuthor" name="author" type="text"
-                                            value={author}
-                                            onChange={
-                                                this.change
-                                            }
-                                            placeholder="Course Author"/>
+                                            <div className="author-name">By {this.props.context.authenticatedUser[0].firstName} {this.props.context.authenticatedUser[0].lastName}</div>
+                                            <label for="description">Description</label>
                                         <textarea id="courseDescription" name="description"
                                             value={description}
                                             onChange={
@@ -58,12 +53,14 @@ export default class CreateCourse extends Component {
                                             placeholder="Course Description"/>
                                     </div>
                                     <div>
+                                    <label for="estimatedTime">Estimated Time</label>
                                         <input id="estimatedTime" name="estimatedTime" type="text"
                                             value={estimatedTime}
                                             onChange={
                                                 this.change
                                             }
                                             placeholder="Estimated Time"/>
+                                        <label for="materialsNeeded">Materials Needed</label>
                                         <textarea id="materialsNeeded" name="materialsNeeded"
                                             value={materialsNeeded}
                                             onChange={
@@ -95,7 +92,6 @@ export default class CreateCourse extends Component {
         const {
             title,
             description,
-            author,
             estimatedTime,
             materialsNeeded
         } = this.state;
@@ -103,7 +99,6 @@ export default class CreateCourse extends Component {
         const course = {
             title,
             description,
-            author,
             estimatedTime,
             materialsNeeded,
             userId: context.authenticatedUser[0].id

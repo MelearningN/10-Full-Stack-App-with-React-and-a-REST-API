@@ -48,7 +48,7 @@ export default class Data {
     // If user sends a bad request
     else if (response.status === 400) {
       return response.json().then(data => {
-        return data.message;
+        return data;
       });
     }
     //Unexpected Error
@@ -80,7 +80,7 @@ export default class Data {
       return response.json().then(data => data);
     }
     //GET courses doesn't exist
-    else if (response.status === 404) {
+    else if (response.status === 400) {
       return null;
     }
     //unexpected Error

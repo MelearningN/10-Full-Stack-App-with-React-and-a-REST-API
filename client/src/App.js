@@ -6,7 +6,7 @@ import NotFound from './components/NotFound';
 import Forbidden  from './components/Forbidden';
 import UnhandledError  from './components/UnhandledError';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
-import CourseDetails from './components/CourseDetails';
+import CourseDetail from './components/CourseDetail';
 import Header from './components/Header';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
@@ -19,7 +19,7 @@ import withContext from './Context';
 
 // connecting to context
 const HeaderWithContext = withContext(Header);
-const CourseDetailWithContext = withContext(CourseDetails);
+const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
 const UserSignUpWithContext = withContext(UserSignUp);
@@ -47,7 +47,7 @@ const App=() => (
                     component={UserSignOutWithContext}/>
                 <PrivateRoute  path="/courses/create" component={CreateCourseWithContext} />
                 <PrivateRoute path="/course/:id/update" component={UpdateCourseWithContext} />
-                <Route path="/not-found" component={NotFound}/>
+                <Route path="/notfound" component={NotFound}/>
                 <Route path="/forbidden" component={Forbidden}/>
                 <Route path="/error" component={UnhandledError}/>
                 <Route component={NotFound}/>

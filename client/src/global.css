@@ -29,6 +29,11 @@ a {
     margin: 0 auto;
     padding: 0 1rem;
 }
+.author-name{
+margin-bottom: 20px;
+    color: gray;
+    font-weight: 700;
+}
 .signup {
     padding:20px
 }

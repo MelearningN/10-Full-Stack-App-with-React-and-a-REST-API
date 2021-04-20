@@ -8,7 +8,8 @@ const Form=(props) => {
         submitButtonText,
         data,
         name,
-        errors
+        errors,
+        serverError
     } = props;
 
     function handleSubmit(event) {
@@ -22,7 +23,9 @@ const Form=(props) => {
     }
 
     return (
-        <React.Fragment> {
+        <React.Fragment> 
+            {serverError.length>0 && <div className="validation--errors">{serverError }</div>}
+            {
             errors.length > 0 ? <div className="validation--errors">
                 <h3>Validation Errors</h3>
                 <ul> {
