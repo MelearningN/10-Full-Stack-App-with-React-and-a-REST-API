@@ -3,7 +3,6 @@ import {
     NavLink
   } from "react-router-dom";
 import NewCourse from './NewCourse';
-import Cookies from 'js-cookie';
 
 import Data from '../Data'
 

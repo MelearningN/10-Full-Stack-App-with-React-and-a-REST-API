@@ -150,6 +150,6 @@ export default class UpdateCourse extends Component { // default states
     }
     // cancel button redirects user
     cancel = () => {
-        this.props.history.push('/' + this.props.match.params.id);
+        this.props.history.push('/');
     }
 }
