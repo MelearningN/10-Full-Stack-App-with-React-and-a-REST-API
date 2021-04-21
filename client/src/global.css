@@ -1,6 +1,6 @@
 /* global.css */
 * {
-    box-sizing: border-box;
+    box-sizing: border-box
 }
 html {
     font-size: 1.25em;
@@ -28,20 +28,6 @@ a {
     max-width: 1250px;
     margin: 0 auto;
     padding: 0 1rem;
-}
-.author-name{
-margin-bottom: 20px;
-    color: gray;
-    font-weight: 700;
-}
-.signup {
-    padding:20px
-}
-.user-logged-in{
-    padding:20px
-}
-.user-form{
-    width:50%;
 }
 header {
     background: #57496e;
@@ -72,17 +58,22 @@ header nav a:hover {
     text-align: right;
     line-height: 1.25;
 }
+.user-logged-in{
+margin-right:10px
+}
+.signup{
+    margin-right:10px
+    }
 .header--signedout li {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: .5rem;
 }
 .course--module {
-    background: #523168;
+    background: #7c689b;
     border-radius: .5rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
-    width:450px;
- 
+    display: block;
 }
 .course--label {
     color: #fff;
@@ -195,20 +186,6 @@ textarea {
     border-radius: .5rem;
     font-weight: bold;
     transition: background 0.2s;
-}
-.disabled{
-    background: #7c689b;
-    color: #fff;
-    font-size: 1rem;
-    padding: .75rem 1.5rem;
-    cursor: not-allowed;
-    border: 0;
-    margin: 10px;
-    width: 210px;
-    text-align: center;
-    border-radius: .5rem;
-    font-weight: bold;
-    transition: background 0.2s; 
 }
 .button:last-child {
     margin-bottom: 0;

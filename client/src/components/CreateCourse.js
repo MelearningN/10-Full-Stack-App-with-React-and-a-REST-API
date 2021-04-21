@@ -8,16 +8,17 @@ export default class CreateCourse extends Component {
         description: '',
         estimatedTime: '',
         materialsNeeded: '',
-        errors: []
+        serverErrors: []
     }
 
     render() {
+        console.log('wwwwww')
         const {
             title,
             description,
             estimatedTime,
             materialsNeeded,
-            errors
+            serverErrors
         } = this.state;
 
         return (
@@ -30,21 +31,23 @@ export default class CreateCourse extends Component {
                         submit={
                             this.submit
                         }
-                        errors={errors}
+                        serverErrors={serverErrors}
                         submitButtonText="Create Course"
                         data={
                             () => (
-                                <React.Fragment>
+                                <div className="main--flex">
                                     <div>
-                                    <label for="title">Title</label>
+                                    <label htmlFor="title">Title</label>
                                         <input id="courseTitle" name="title" type="text"
                                             value={title}
                                             onChange={
                                                 this.change
                                             }
                                             placeholder="Course title"/>
-                                            <div className="author-name">By {this.props.context.authenticatedUser[0].firstName} {this.props.context.authenticatedUser[0].lastName}</div>
-                                            <label for="description">Description</label>
+                                            <label htmlFor="author">Course Author</label>
+                                             <input className="author-name" name="author" type="text"
+                                            value={`${this.props.context.authenticatedUser[0].firstName} ${this.props.context.authenticatedUser[0].lastName}`} readOnly/>
+                                            <label htmlFor="description">Description</label>
                                         <textarea id="courseDescription" name="description"
                                             value={description}
                                             onChange={
@@ -53,14 +56,14 @@ export default class CreateCourse extends Component {
                                             placeholder="Course Description"/>
                                     </div>
                                     <div>
-                                    <label for="estimatedTime">Estimated Time</label>
+                                    <label htmlFor="estimatedTime">Estimated Time</label>
                                         <input id="estimatedTime" name="estimatedTime" type="text"
                                             value={estimatedTime}
                                             onChange={
                                                 this.change
                                             }
                                             placeholder="Estimated Time"/>
-                                        <label for="materialsNeeded">Materials Needed</label>
+                                        <label htmlFor="materialsNeeded">Materials Needed</label>
                                         <textarea id="materialsNeeded" name="materialsNeeded"
                                             value={materialsNeeded}
                                             onChange={
@@ -68,16 +71,13 @@ export default class CreateCourse extends Component {
                                             }
                                             placeholder="materialsNeeded"/>
                                     </div>
-                                </React.Fragment>
+                                </div>
                             )
                         }/>
                 </div>
         </main>
         )
-
-
     }
-
 
     change = (event) => {
         const name = event.target.name;
@@ -108,35 +108,18 @@ export default class CreateCourse extends Component {
             username: context.authenticatedUser[0].emailAddress,
             password: context.authenticatedUserPwd
         }
-
-        // form validation
-        if (title === '' || description === '') {
-            if (title === '') {
-                this.setState(prevState => ({
-                    errors: [
-                        ...prevState.errors,
-                        'Title'
-                    ]
-                }))
-            }
-            if (description === '') {
-                this.setState(prevState => ({
-                    errors: [
-                        ...prevState.errors,
-                        'Descrition'
-                    ]
-                }))
-            }
-        } else {
-            this.setState({errors: []})
-            context.data.createCourse(course, userCredentials)
-            .then(
+ 
+         //   this.setState({errors: []})
+            context.data.createCourse(course, userCredentials).then(data => {
+                if (data.length ===0) {
               this.props.history.push('/')
-            )
-            .catch((err) => {
+                }
+                else {
+                    this.setState({serverErrors: data.errors});
+                  }
+                }).catch((err) => {
                 this.props.history.push('/error');
             });
-        }
     }
 
     cancel = () => {

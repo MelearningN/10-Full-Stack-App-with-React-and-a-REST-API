@@ -3,6 +3,7 @@ import {
     NavLink
   } from "react-router-dom";
 import NewCourse from './NewCourse';
+import Cookies from 'js-cookie';
 
 import Data from '../Data'
 
@@ -26,14 +27,14 @@ class Courses extends Component {
     componentDidMount() {
         this.fetchCourses();
     }
-
+    
     render() {
         return (
             <main>
             <div className="wrap main--grid">
             {!this.state.loading ? 
             this.state.courses.map(course => 
-                <NavLink key={course.id} className="course--module" to={`/api/courses/${course.id}`}>
+                <NavLink key={course.id} className="course--module" to={`/courses/${course.id}`}>
                 <h2 className="course--label">Course</h2>
                 <h3 className="course--title">{course.title}</h3>
             </NavLink>) : 

@@ -9,8 +9,7 @@ export default class UserSignUp extends Component { // default states
         emailAddress: '',
         password: '',
         confirmPassword: '',
-        errors: [],
-        serverError:[]
+        serverErrors:[]
     }
 
     render() {
@@ -20,12 +19,11 @@ export default class UserSignUp extends Component { // default states
             emailAddress,
             password,
             confirmPassword,
-            errors,
-            serverError
+            serverErrors
         } = this.state;
         return (
             <div className="bounds">
-                <div className="grid-33 centered signin">
+               <div className="form--centered">
                     <h1>Sign Up</h1>
                     <Form name={'signup'}
                         cancel={
@@ -35,8 +33,7 @@ export default class UserSignUp extends Component { // default states
                             this.submit
                         }
                         submitButtonText="Sign Up"
-                        errors={errors}
-                        serverError={serverError}
+                        serverErrors={serverErrors}
                         data={
                             () => (
                                 <React.Fragment>
@@ -101,8 +98,11 @@ export default class UserSignUp extends Component { // default states
             password,
             confirmPassword
         } = this.state;
-        this.setState({errors: []})
-
+        this.setState({serverErrors: []})
+        if(confirmPassword !==password){
+          this.setState({serverErrors: ['password doesnt match']})
+          return
+        }
         // Create user
         const user = {
             firstName,
@@ -111,67 +111,24 @@ export default class UserSignUp extends Component { // default states
             password
         };
 
-        // user form validation
-        if (firstName === '' || lastName === '' || emailAddress === '' || password === '' || confirmPassword === '') {
-            if (firstName === '') {
-                this.setState(prevState => ({
-                    errors: [
-                        ...prevState.errors,
-                        'firstName'
-                    ]
-                }))
-            }
-            if (lastName === '') {
-                this.setState(prevState => ({
-                    errors: [
-                        ...prevState.errors,
-                        'lastName'
-                    ]
-                }))
-            }
-            if (emailAddress === '') {
-                this.setState(prevState => ({
-                    errors: [
-                        ...prevState.errors,
-                        'emailAddress'
-                    ]
-                }))
-            }
-            if (password === '') {
-                this.setState(prevState => ({
-                    errors: [
-                        ...prevState.errors,
-                        'password'
-                    ]
-                }))
-            }
-            if (confirmPassword !== password) {
-                this.setState(prevState => ({
-                    errors: [
-                        ...prevState.errors,
-                        'confirmPassword'
-                    ]
-                }))
-            }
-
-        } else { // when there is no error then create a user
+         // when there is no error then create a user
             context.data.createUser(user).then(data => {
-                if (data.errors.length > 0) {
-                    this.setState({serverError: data.errors});
+              console.log('dataaa', data.length)
+                if (data.length ===0) {
+                  context.actions.signIn(emailAddress, password).then(() => {
+                    this.props.history.push('/');
+                });
+                   
                 } else {
-                    context.actions.signIn(emailAddress, password).then(() => {
-                        this.props.history.push('/');
-                    });
+                  this.setState({serverErrors: data.errors});
                 }
             }).catch(err=>{
-              this.setState({
-                serverError: err.errors
-            })
+              this.props.history.push('/error');
             });
         }
-    }
-
+    
     cancel = () => {
         this.props.history.push('/');
     }
-}
+  }
+

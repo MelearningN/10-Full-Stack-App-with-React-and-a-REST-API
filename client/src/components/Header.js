@@ -15,7 +15,7 @@ export default class Header extends React.PureComponent {
                 {authUser ? (
               <ul className="header--signedin">
                 <li className="user-logged-in">Welcome, {authUser.firstName + " " + authUser.lastName}!</li>
-                <Link to="/signout">Sign Out</Link>
+                <Link className="signup" to="/signout">Sign Out</Link>
               </ul>
             ) : (
                 <ul className="header--signedout">

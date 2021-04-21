@@ -7,9 +7,7 @@ const Form=(props) => {
         submit,
         submitButtonText,
         data,
-        name,
-        errors,
-        serverError
+        serverErrors
     } = props;
 
     function handleSubmit(event) {
@@ -24,19 +22,16 @@ const Form=(props) => {
 
     return (
         <React.Fragment> 
-            {serverError.length>0 && <div className="validation--errors">{serverError }</div>}
             {
-            errors.length > 0 ? <div className="validation--errors">
+            serverErrors.length>0 ? <div className="validation--errors">
                 <h3>Validation Errors</h3>
                 <ul> {
-                    errors.map(error => <li key={error}>{error==='confirmPassword' ? 'password does not match':`Please provide a value for "${error}"`}</li>)
+                    serverErrors.map(error => <li key={error}>{error}</li>)
                 } </ul>
             </div> : null
         }
             <form onSubmit={handleSubmit}>
-                <div className={
-                    name === ('signup' || 'signin') ? 'user-form' : "main--flex"
-                }>
+                <div>
                     {
                     data()
                 } </div>

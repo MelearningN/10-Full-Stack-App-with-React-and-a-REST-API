@@ -7,16 +7,15 @@ export default class UserSignIn extends Component {
   state = {
     emailAddress: '',
     password: '',
-    errors: [],
+    serverErrors: [],
   }
 
   render() {
     const {
       emailAddress,
       password,
-      errors,
+      serverErrors,
     } = this.state;
-
     return (
       <main>
         <div className="form--centered">
@@ -24,11 +23,12 @@ export default class UserSignIn extends Component {
           <Form 
             name={'signin'}
             cancel={this.cancel}
-            errors={errors}
             submit={this.submit}
+            serverErrors={serverErrors}
             submitButtonText="Sign In"
             data={() => (
               <React.Fragment>
+                <label htmlFor="emailAddress">Email Address</label>
                 <input 
                   id="emailAddress" 
                   name="emailAddress" 
@@ -36,6 +36,7 @@ export default class UserSignIn extends Component {
                   value={emailAddress} 
                   onChange={this.change} 
                   placeholder="email Address" />
+                <label htmlFor="password">Password</label>
                 <input 
                   id="password" 
                   name="password"
@@ -68,15 +69,16 @@ export default class UserSignIn extends Component {
     const { context } = this.props;
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
-
     context.actions.signIn(emailAddress, password)
       .then((user) => {
-        if (user === null) {
-          this.setState(() => {
-            return { errors: [ 'Sign-in was unsuccessful' ] };
-          });
-        } else {
+        if (user.length) {
           this.props.history.push(from);
+        } else {
+          this.setState(() => {
+            return {
+              serverErrors:[ user.message]
+            };
+          });
         }
       })
       .catch((error) => {

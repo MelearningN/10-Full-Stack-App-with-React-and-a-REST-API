@@ -26,12 +26,12 @@ export default class Data {
   //GET Users, pass in auth using credentials username and password
   async getUser(username, password) {
     const response = await this.api(`/users`, 'GET', null, true, { username, password });
-    if (response.status === 200) {
+    if (response.status === 200 || 401) {
       return response.json().then(data => data);
     }
     // If user is unauthorized
     else if (response.status === 401) {
-      return null;
+      return response;
     }
     //Unexpected Error
     else {
@@ -47,9 +47,7 @@ export default class Data {
     }
     // If user sends a bad request
     else if (response.status === 400) {
-      return response.json().then(data => {
-        return data;
-      });
+      return response.json().then(data => data);
     }
     //Unexpected Error
     else {
@@ -65,7 +63,7 @@ export default class Data {
     }
     // requested course doesn't exist
     else if (response.status === 404) {
-      return null;
+      return response.json().then(data => data);
     }
     //Unexpected Error
     else {
@@ -97,10 +95,8 @@ export default class Data {
     }
     // If user sends a bad request
     else if (response.status === 400) {
-      return response.json().then(data => {
-        return data.message;
-      });
-    }
+      return response.json().then(data => data);
+      }
      //unexpected Error
     else {
       throw new Error();

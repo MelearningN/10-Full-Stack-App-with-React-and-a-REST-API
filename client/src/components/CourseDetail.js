@@ -79,13 +79,11 @@ class CourseDetail extends Component {
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{currentCourse.title}</h4>
                         <p>By {currentCourse.User.firstName} {currentCourse.User.lastName}</p>
-                        {
-                          <ReactMarkdown children ={currentCourse.description} />
-                        }
+                        {<ReactMarkdown children ={currentCourse.description} />}
                     </div>
                     <div>
                         <h3 className="course--detail--title">Estimated Time</h3>
-                        <p>{currentCourse.estimatedTime || 'not-available'}</p>
+                        <p>{currentCourse.estimatedTime || 'Not Available'}</p>
                         <h3 className="course--detail--title">Materials Needed</h3>
                        { currentCourse.materialsNeeded ?   <ReactMarkdown children={markdownString(currentCourse.materialsNeeded)} /> : "No Material found"}
                     </div>

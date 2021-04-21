@@ -38,7 +38,7 @@ export class Provider extends Component {
   signIn = async (username, password) => {
 
     const user = await this.data.getUser(username, password);
-    if (user !== null) {
+    if (user.length) {
       this.setState(() => {
         return {
           authenticatedUser: user,
@@ -51,14 +51,18 @@ export class Provider extends Component {
       Cookies.set('authenticatedUser', JSON.stringify(user), cookieOptions);
     
       Cookies.set('authenticatedUserPwd', password, cookieOptions); 
-       }
+       } 
     return user;
   }
 
   signOut = () => {
-    this.setState({ authenticatedUser: null,authenticatedUserPwd: null });
+    this.setState({
+        authenticatedUser: null,
+        authenticatedUserPwd: null
+      }); 
     Cookies.remove('authenticatedUser');
     Cookies.remove('authenticatedUserPwd');
+    
   }
 }
 

@@ -33,11 +33,11 @@ const App=() => (
             <HeaderWithContext/>
             <Switch>
                 <Route exact path="/">
-                    <Redirect to="/api/courses"/>
+                    <Redirect to="/courses"/>
                 </Route>
-                <Route exact path="/api/courses"
+                <Route exact path="/courses"
                     component={Courses}></Route>
-                <Route exact path="/api/courses/:id"
+                <Route exact path="/courses/:id"
                     component={CourseDetailWithContext}></Route>
                 <Route path="/signin"
                     component={UserSignInWithContext}/>
@@ -45,7 +45,7 @@ const App=() => (
                     component={UserSignUpWithContext}/>
                 <Route path="/signout"
                     component={UserSignOutWithContext}/>
-                <PrivateRoute  path="/courses/create" component={CreateCourseWithContext} />
+                <PrivateRoute  path="/course/create" component={CreateCourseWithContext} />
                 <PrivateRoute path="/course/:id/update" component={UpdateCourseWithContext} />
                 <Route path="/notfound" component={NotFound}/>
                 <Route path="/forbidden" component={Forbidden}/>
