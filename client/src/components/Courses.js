@@ -13,7 +13,6 @@ class Courses extends Component {
     }
     // fetching all the courses when component in mounted
     fetchCourses = () => {
-        this.setState({courses: [], isLoading: true});
         const data = new Data();
         data.getCourses().then(responseData => {
             this.setState({courses: responseData, isLoading: false});

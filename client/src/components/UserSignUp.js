@@ -113,7 +113,6 @@ export default class UserSignUp extends Component { // default states
 
          // when there is no error then create a user
             context.data.createUser(user).then(data => {
-              console.log('dataaa', data.length)
                 if (data.length ===0) {
                   context.actions.signIn(emailAddress, password).then(() => {
                     this.props.history.push('/');

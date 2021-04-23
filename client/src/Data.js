@@ -63,7 +63,7 @@ export default class Data {
     }
     // requested course doesn't exist
     else if (response.status === 404) {
-      return response.json().then(data => data);
+      return null;
     }
     //Unexpected Error
     else {

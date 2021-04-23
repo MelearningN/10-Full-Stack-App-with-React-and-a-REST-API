@@ -14,20 +14,26 @@ export default class UpdateCourse extends Component { // default states
 
     // fetching courses by specific id
     fetchCourseById = (courseId) => {
-
         const {context} = this.props;
-
         context.data.getCourseById(courseId).then(responseData => {
+          if(responseData ===null){
+            this.props.history.push('/notfound')
+          }
+          else if(context.authenticatedUser[0].id!==responseData[0].User.id){
+            this.props.history.push('/forbidden')
+          }else{
             this.setState({
-                title: responseData[0].title,
-                description: responseData[0].description,
-                materialsNeeded: responseData[0].materialsNeeded,
-                estimatedTime: responseData[0].estimatedTime,
-                isLoading: false,
-                id: responseData[0].id,
-                courseUserId: responseData[0].User.id,
-                courseWasFound: true
-            });
+              title: responseData[0].title,
+              description: responseData[0].description,
+              materialsNeeded: responseData[0].materialsNeeded,
+              estimatedTime: responseData[0].estimatedTime,
+              isLoading: false,
+              id: responseData[0].id,
+              courseUserId: responseData[0].User.id,
+              courseWasFound: true
+          });
+          }
+            
         }).catch((err) => {
             console.log(err);
         });
@@ -45,7 +51,6 @@ export default class UpdateCourse extends Component { // default states
             materialsNeeded,
             serverErrors
         } = this.state;
-
         return (
             <main>
                 <div className="wrap">
@@ -148,8 +153,9 @@ export default class UpdateCourse extends Component { // default states
         });
 
     }
+    
     // cancel button redirects user
     cancel = () => {
-        this.props.history.push('/');
+        this.props.history.push(`/courses/${this.props.match.params.id}`);
     }
 }

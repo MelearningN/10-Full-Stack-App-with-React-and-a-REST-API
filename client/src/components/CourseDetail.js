@@ -39,7 +39,10 @@ class CourseDetail extends Component {
         const {context} = this.props;
         const currentCourse = this.state.course != null && this.state.course[0]
         if (authorizedUser) {
-            context.data.deleteCourse(currentCourse.id, context.authenticatedUser, context.authenticatedUserPwd).then(this.props.history.push('/')).catch((err) => {
+            context.data.deleteCourse(currentCourse.id, context.authenticatedUser, context.authenticatedUserPwd)
+            .then(()=>this.props.history.push('/')
+            )
+            .catch((err) => {
                 console.log(err);
                 this.props.history.push('/error');
             });

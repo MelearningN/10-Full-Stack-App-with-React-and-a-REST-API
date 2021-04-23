@@ -12,7 +12,6 @@ export default class CreateCourse extends Component {
     }
 
     render() {
-        console.log('wwwwww')
         const {
             title,
             description,
